@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "Historial";
+    Layout = "~/Views/layout/_Layout.cshtml";
+}
+
+<div class="box box-info">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Histoial de movimientos</h3>
+                </div><!-- /.box-header -->
+
+                  <div class="box-body">
+                      <form class="form-inline" role="search">
+                        <div class="form-group">
+                            <label>Consultar movimientos: </label>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" onchange="updateDataTable();" name="Periodo" id="Periodo" >
+                            </div><!-- /.input group -->
+                                <select class="selectpicker" name="Almacen" id="Almacen" onchange="updateDataTable();">
+                                    <option value="">Seleccione almacén</option>
+                                    <option value="Suc. SJI">Suc. SJI</option>
+                                    <option value="Suc. Penuelas">Suc. Peñuelas</option>
+                                    <option value="Suc. Menchaca">Suc. Menchaca</option>
+                                </select>
+                            </div>
+                          
+                        <div class="form-group">
+                            <label style="display:inline;"><input type="checkbox" onchange="updateDataTable();" class="checkbox" id="InVentas" name="InVentas" value="1"> Sólo ventas </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary ">Buscar</button>
+                       </form>
+                      <h5 align="right" style="padding-right: 10px" id="total"></h5>
+                   <table id="tableHistorial" class="table table-hover table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Clave</th>
+                                <th>Producto</th>
+                                <th>Descripción</th>
+                                <th>Fecha</th>
+                                <th>Tipo movimiento</th>
+                                <th>Origen</th>
+                                <th>Destino</th>
+                                <th>Cantidad</th>
+                                <th>Existencia anterior</th>
+                                <th>Existencia Actual</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                  </div>
+              </div><!-- /.box -->
+    <!-- Include Date Range Picker -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+    <!-- jQuery data table-->
+    <script   src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"   crossorigin="anonymous"></script>
+    <!-- JS selectpicker -->
+    <!-- bootstap data table-->
+    <script   src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"   crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+    <!-- CSS selectpicker -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+    <!-- CSS Data table-->
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css"  crossorigin="anonymous">
+    <!-- js de la pagina -->
+    @Scripts.Render("~/Scripts/historial-js")

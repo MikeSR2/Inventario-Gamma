@@ -1,0 +1,87 @@
+﻿<div class="modal-dialog" id="contenedor">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modificar registro</h4>
+                  </div>
+                  <div class="modal-body" >
+                      <form role="form" method="post" id="formMod" class="form-horizontal" action="/actualizaciones/actualizar"  >
+                        <input type="text" readonly="true" style="display:none" name="IdProducto" id="inId">
+                        <div class="box-body">
+                          <div id="mensaje" style="display:none">
+                           </div>
+                        <div class="form-group">
+                          <label for="Clave" class="control-label col-sm-2" >Clave</label>
+                             <div class="col-sm-10">
+                                <input type="text" required class="form-control" name="Clave" id="inClave" placeholder="Ingresa la clave" maxlength="50">
+                             </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="Nombre" class="control-label col-sm-2" >Nombre</label>
+                          <div class="col-sm-10">
+                            <input type="text" readonly="true" class="form-control" id="inNombre" name="Nombre" placeholder="Ingresa el nombre del producto" maxlength="100" />
+                          </div>
+                         </div>
+                        <div class="form-group">
+                          <label for="Marca" class="control-label col-sm-2" >Marca</label>
+                          <div class="col-sm-10">
+                              <input type="text" readonly="true" class="form-control" id="inMarca" name="Marca" placeholder="Ingresa la marca" maxlength="50" />
+                          </div>
+                        </div>
+                         <div class="form-group">
+                          <label for="Descripcion" class="control-label col-sm-2" >Descripción</label>
+                            <div class="col-sm-10">
+                             <input type="text" required class="form-control" id="inDescripcion"  name="Descripcion" placeholder="Ingresa la descripción del producto" maxlength="100"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="Presentacion" class="control-label col-sm-2" >Presentación</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inPresentacion" name="Presentacion" placeholder="Ingresa la presentación" maxlength="50" />
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="Precio_Costo" class="control-label col-sm-2" >Precio distribuidor</label>
+                          <div class="col-sm-10">
+                            <input type="number" required class="form-control" id="inPrecio" name="Precio_Costo"  step="any" />
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="Importe_Inventario" class="control-label col-sm-2" >Precio público</label>
+                          <div class="col-sm-10">
+                            <input type="number" required class="form-control" id="inImporte" name="Importe_Inventario"  step="any" />
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inAlmacen" class="control-label col-sm-2" >Almacen</label>
+                          <div class="col-sm-10" onload=>
+                             <select class="selectpicker" id="inAlmacen" name="Almacen">
+                                <option value="">Seleccione almacén</option>
+                                <option value="SJI">Suc. SJI</option>
+                                <option value="Penuelas">Suc. Peñuelas</option>
+                                <option value="Menchaca">Suc. Menchaca</option>
+                            </select>
+                           </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="Ubicacion" class="control-label col-sm-2" >Ubicación</label>
+                          <div class="col-sm-10">
+                             <input type="text" class="form-control" id="inUbicacion"  name="Ubicacion"  placeholder="Ubicación" maxlength="50" />
+                         </div>
+                        </div>
+
+                        <div class="form-group">        
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="button" id="btnEliminar" onclick="confirmarEliminar();" class="btn btn-danger glyphicon glyphicon-remove-sign"> Eliminar</button>
+                                <button type="submit" id="waitMe_ex" class="btn btn-primary glyphicon glyphicon-floppy-disk"> Actualizar</button>
+                                <button type="button" id="btnCancelar" onclick="ocultarModal('#modalMod');" class="btn btn-info glyphicon glyphicon glyphicon-ban-circle"> Cancelar</button>
+                            </div>
+                       </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              @Scripts.Render("~/Scripts/actualizaciones-js");

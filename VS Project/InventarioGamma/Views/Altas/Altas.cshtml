@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Altas";
+    Layout = "~/Views/layout/_Layout.cshtml";
+}
+
+<div class="box box-primary" id="contenedor">
+            <div class="box-header with-border">
+              <h3 class="box-title">Ingreso al inventario</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form" method="post" id="formulario" class="form-horizontal" action="/Altas/nuevo"  >
+              <div class="box-body">
+                  <div id="mensaje" style="display:none">
+              </div>
+                <div class="form-group">
+                  <label for="Clave" class="control-label col-sm-2" >Clave</label>
+                     <div class="col-sm-10">
+                        <input type="text" required class="form-control" name="Clave" id="inClave" placeholder="Ingresa la clave" maxlength="50">
+                     </div>
+                </div>
+                <div class="form-group">
+                  <label for="Nombre" class="control-label col-sm-2" >Nombre del producto</label>
+                  <div class="col-sm-10">
+                    <input type="text" required class="form-control" id="inNombre" name="Nombre" placeholder="Ingresa el nombre del producto" maxlength="100" />
+                  </div>
+                 </div>
+                <div class="form-group">
+                  <label for="Marca" class="control-label col-sm-2" >Marca</label>
+                  <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inMarca" name="Marca" placeholder="Ingresa la marca" maxlength="50" />
+                  </div>
+                </div>
+                 <div class="form-group">
+                  <label for="Descripcion" class="control-label col-sm-2" >Descripción</label>
+                    <div class="col-sm-10">
+                     <input type="text" required class="form-control" id="Descripcion"  name="Descripcion" placeholder="Ingresa la descripción del producto" maxlength="100"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label for="Presentacion" class="control-label col-sm-2" >Presentación</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inPresentacion" name="Presentacion" placeholder="Ingresa la presentacion" maxlength="50" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="Precio_Costo" class="control-label col-sm-2" >Precio distribuidor</label>
+                  <div class="col-sm-10">
+                    <input type="number" required class="form-control" id="inPrecio" name="Precio_Costo"  step="any" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="Importe_Inventario" class="control-label col-sm-2" >Precio Público</label>
+                  <div class="col-sm-10">
+                    <input type="number" required class="form-control" id="inImporte" name="Importe_Inventario"  step="any" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="Almacen" class="control-label col-sm-2" >Almacén</label>
+                  <div class="col-sm-10">
+                        <select class="selectpicker" id="Almacen" name="Almacen" required readonly="true" >
+                            <option value="">Seleccione almacén</option>
+                            <option value="SJI">Suc. SJI</option>
+                            <option value="Penuelas">Suc. Peñuelas</option>
+                            <option value="Menchaca">Suc. Menchaca</option>
+                        </select> 
+                   </div>
+                </div>
+                <div class="form-group">
+                  <label for="Ubicacion" class="control-label col-sm-2" >Ubicación</label>
+                  <div class="col-sm-10">
+                     <input type="text" class="form-control" id="inUbicacion"  name="Ubicacion"  placeholder="Ingrese ubicación" maxlength="50" />
+                 </div>
+                </div>
+
+                <div class="form-group">        
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" id="waitMe_ex" class="btn btn-primary glyphicon glyphicon-floppy-disk">Guardar</button>
+                    </div>
+               </div>
+              </div>
+            </form>
+          </div>
+        <!-- JS selectpicker -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+        <!-- CSS selectpicker -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+        <!-- js de pagina -->
+        @Scripts.Render("~/Scripts/altas-js")

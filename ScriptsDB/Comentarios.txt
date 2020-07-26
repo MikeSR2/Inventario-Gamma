@@ -1,0 +1,2 @@
+Recuerda que la base de datos se llama InventarioGamma
+e igualmente el modelo de entity framework

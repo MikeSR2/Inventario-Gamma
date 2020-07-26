@@ -1,0 +1,199 @@
+﻿@{
+    ViewBag.Title = "Consultas";
+    Layout = "~/Views/layout/_Layout.cshtml";
+}
+
+            <div class="box box-info">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Búsqueda de artículos</h3>
+                </div><!-- /.box-header -->
+
+                  <div class="box-body">
+                        <div class="form-group">
+                            <label>Mostrar sólo artículos del almacén: </label>
+                            <select class="selectpicker" id="inputAlmacen" name="InAlmacen">
+                                <option value="">Todos</option>
+                                <option value="SJI">Suc. SJI</option>
+                                <option value="Penuelas">Suc. Peñuelas</option>
+                                <option value="Menchaca">Suc. Menchaca</option>
+                            </select>
+                        </div>
+                   <table id="tableConsulta" class="table table-hover table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Clave</th>
+                                <th>Nombre</th>
+                                <th>Marca</th>
+                                <th>Descripción</th>
+                                <th>Presentación</th>
+                                <th>Precio distribuidor</th>
+                                <th>Precio público</th>
+                                <th>Almacén</th>
+                                <th>Ubicación</th>
+                                <th>Existencia</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           
+                        </tbody>
+                    </table>
+                  </div>
+              </div><!-- /.box -->
+             
+            <!-- Modal para modificar -->
+            <div id="modalMod" class="modal fade" role="dialog">
+              
+            </div>
+            <!-- Modal alta de inventario-->
+            <div id="modalAlta" class="modal fade" role="dialog">
+              <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Alta de inventario</h4>
+                  </div>
+                  <div class="modal-body">
+                    <form role="form" method="post" id="formAlta" class="form-horizontal" action="actualizaciones/alta-inventario"  >
+                        <input type="text" readonly="true" style="display:none" name="IdProducto" id="inIdA">
+                        <div class="form-group">
+                              <label for="ClaveA" class="control-label col-sm-2" >Clave</label>
+                                 <div class="col-sm-10">
+                                    <input type="text" readonly="true" class="form-control" name="ClaveA" id="inClaveA">
+                                 </div>
+                         </div>
+                        <div class="form-group">
+                              <label for="NombreA" class="control-label col-sm-2" >Nombre</label>
+                                 <div class="col-sm-10">
+                                    <input type="text" readonly="true" class="form-control" name="NombreA" id="inNombreA">
+                                 </div>
+                         </div>
+                        <div class="form-group">
+                              <label for="Cantidad" class="control-label col-sm-2" >Cantidad a dar de alta</label>
+                                 <div class="col-sm-10">
+                                    <input type="number" required class="form-control" name="Cantidad" id="inCantidad">
+                                 </div>
+                         </div>
+                        <div class="form-group">        
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" id="waitMe_ex" class="btn btn-primary glyphicon glyphicon-floppy-disk"> Actualizar</button>
+                                    <button type="button" id="btnCancelar" onclick="ocultarModal('#modalAlta');" class="btn btn-info glyphicon glyphicon glyphicon-ban-circle"> Cancelar</button>
+                                </div>
+                           </div>
+                    </form>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <!-- Modal transferencia-->
+            <div id="modalTransfer" class="modal fade" role="dialog">
+              <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Transferencia de inventario</h4>
+                  </div>
+                  <div class="modal-body">
+                    <form role="form" method="post" id="formTransfer" class="form-horizontal" action="actualizaciones/transferencia"  >
+                        <input type="text" readonly="true" style="display:none" name="IdProducto" id="inIdT">
+                        <div class="form-group">
+                              <label for="ClaveT" class="control-label col-sm-2" >Clave</label>
+                                 <div class="col-sm-10">
+                                    <input type="text" readonly="" class="form-control" name="ClaveT" id="inClaveT">
+                                 </div>
+                         </div>
+                        <div class="form-group">
+                              <label for="NombreT" class="control-label col-sm-2" >Nombre</label>
+                                 <div class="col-sm-10">
+                                    <input type="text" readonly="" class="form-control" name="NombreT" id="inNombreT">
+                                 </div>
+                         </div>
+                        <div class="form-group">
+                              <label for="Cantidad" class="control-label col-sm-2" >Cantidad a transferir</label>
+                                 <div class="col-sm-10">
+                                    <input type="number" required class="form-control" name="Cantidad" id="inCantidadT">
+                                 </div>
+                         </div>
+                         <div class="form-group">
+                          <label for="inAlmacen" class="control-label col-sm-2" >Almacen destino</label>
+                          <div class="col-sm-10" onload=>
+                             <select class="selectpicker" id="inAlmacen" name="Almacen">
+                                <option value="">Seleccione almacén destino</option>
+                                <option value="SJI">Suc. SJI</option>
+                                <option value="Penuelas">Suc. Peñuelas</option>
+                                <option value="Menchaca">Suc. Menchaca</option>
+                            </select>
+                           </div>
+                        </div>
+                        <div class="form-group">        
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" id="waitMe_exT" class="btn btn-primary glyphicon glyphicon-floppy-disk"> Transferir</button>
+                                    <button type="button" id="btnCancelarT" onclick="ocultarModal('#modalTransfer');" class="btn btn-info glyphicon glyphicon glyphicon-ban-circle"> Cancelar</button>
+                                </div>
+                           </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Modal agregar venta-->
+            <div id="modalAVenta" class="modal fade" role="dialog">
+              <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Agregar al carrito de ventas</h4>
+                  </div>
+                  <div class="modal-body">
+                    <form role="form" method="post" id="formAVenta" class="form-horizontal" action="actualizaciones/venta"  >
+                        <input type="text" readonly="true" style="display:none" name="IdProducto" id="inIdV" >
+                        <div class="form-group">
+                              <label for="ClaveV" class="control-label col-sm-2" >Clave</label>
+                                 <div class="col-sm-10">
+                                    <input type="text" readonly="" class="form-control" name="ClaveV" id="inClaveV">
+                                 </div>
+                         </div>
+                        <div class="form-group">
+                              <label for="NombreT" class="control-label col-sm-2" >Nombre</label>
+                                 <div class="col-sm-10">
+                                    <input type="text" readonly="" class="form-control" name="NombreV" id="inNombreV">
+                                 </div>
+                         </div>
+                        <div class="form-group">
+                              <label for="Cantidad" class="control-label col-sm-2" >Cantidad a agregar</label>
+                                 <div class="col-sm-10">
+                                    <input type="number" required class="form-control" name="Cantidad" id="inCantidadV">
+                                 </div>
+                         </div>
+                        <div class="form-group">        
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" id="btnAVenta" class="btn btn-primary glyphicon glyphicon-floppy-disk"> Agregar</button>
+                                    <button type="button" id="btnCancelarV" onclick="ocultarModal('#modalAVenta');" class="btn btn-info glyphicon glyphicon glyphicon-ban-circle"> Cancelar</button>
+                                </div>
+                           </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+        <!-- Scripts y styles para vista de consulyas -->
+        <!-- jQuery data table-->
+        <script   src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"   crossorigin="anonymous"></script>
+        <!-- bootstap data table-->
+        <script   src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"   crossorigin="anonymous"></script>
+        <!-- JS selectpicker -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+        <!-- CSS selectpicker -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+        <!-- CSS Data table-->
+        <link rel="stylesheet" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css"  crossorigin="anonymous">
+        <!-- Script para la pagina de consultas -->
+        @Scripts.Render("~/Scripts/consultas-js")
+        <!-- JS sweetalert-->
+        @Scripts.Render("~/Scripts/sweetalert")
+        <!-- CSS sweetalert-->
+        @Styles.Render("~/Content/sweetalert")

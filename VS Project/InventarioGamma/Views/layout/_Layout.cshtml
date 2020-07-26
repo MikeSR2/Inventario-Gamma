@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <title>Inventario Gamma</title>
+        <link rel='shortcut icon' type='image/x-icon' href='/Content/img/favicon.png' />
+         <!-- jQuery -->
+        <script   src="https://code.jquery.com/jquery-2.2.1.min.js"   integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="   crossorigin="anonymous"></script>
+        <!-- BootStrap JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <!-- Script de plantilla -->
+        @Scripts.Render("~/Scripts/app-js")
+        <!-- Script para la hora -->
+        @Scripts.Render("~/Scripts/reloj")
+        <!-- plugin waitMe-->
+        @Scripts.Render("~/Scripts/waitMe")
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+        <!-- BootStrap 3.3.6 -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <!-- CSS de plantilla-->
+        @Styles.Render("~/Content/AdminLTE")
+        <!-- Tema de plantilla-->
+        @Styles.Render("~/Content/skin-blue")
+        <!-- css para plugin waitMe -->
+        @Styles.Render("~/Content/waitMe")
+        
+    </head>
+    <body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+
+      <!-- Main Header -->
+      <header class="main-header">
+
+        <!-- Logo de la pagina-->
+        <a href="" class="logo">
+          <!-- Minin logo -->
+          <span class="logo-mini">GAMMA</span>
+          <!-- Logo para pantallas regulares -->
+          <span class="logo-lg">Inventarios <b>GAMMA</b></span>
+        </a>
+
+        <!-- Ocultar Navbar -->
+        <nav class="navbar navbar-static-top" role="navigation">
+          <!-- Boton para ocultar navbar-->
+          <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+          </a>
+          <!-- Navbar Right Menu -->
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+              <!-- User Account Menu -->
+              <li class="dropdown user user-menu">
+                <!-- Menu Toggle Button -->
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <!-- The user image in the navbar-->
+                  <img src="/Content/img/avatar5.png" class="user-image" alt="User Image">
+                  <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                  <span class="hidden-xs">@ViewBag.Usuario</span>
+                </a>
+                <ul class="dropdown-menu">
+                  <!-- The user image in the menu -->
+                  <li class="user-header">
+                    <p>
+                      @ViewBag.Usuario
+                      <small>@ViewBag.Sucursal</small>
+                    </p>
+                  </li>
+                  <!-- Menu Footer-->
+                  <li class="user-footer">
+                    <div class="pull-left">
+                      <a href="#" class="btn btn-default btn-flat">Perfil</a>
+                    </div>
+                    <div class="pull-right">
+                      <a href="cerrar-sesion" class="btn btn-default btn-flat">Cerrar sesión</a>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <!-- Left side column. contains the logo and sidebar -->
+      <aside class="main-sidebar">
+
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+
+          <!-- Sidebar Menu -->
+          <ul class="sidebar-menu">
+            <li class="header">MENU</li>
+            <li><a href="/consultas"><i class="fa fa-table"></i> <span>Consultar</span></a></li>
+            <li><a href="/altas"><i class="fa fa-edit"></i> <span>Alta de mercancía</span></a></li>
+            <li><a href="/historial"><i class="fa fa-calendar"></i> <span>Historial de movimientos</span></a></li>
+            @if(Session["almacen"].Equals("Admin")){
+              <li><a href="/admin"><i class="fa fa-gears"></i> <span>Administración de usuarios</span></a></li>
+            }<li><a href="ayuda"><i class="fa fa-book"></i> <span>Ayuda</span></a></li>
+          </ul><!-- /.sidebar-menu -->
+        </section>
+        <!-- /.sidebar -->
+      </aside>
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            @ViewBag.titSeccion
+            <small>@ViewBag.descSeccion</small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
+            <li class="active">@ViewBag.nivel</li>
+          </ol>
+        </section>
+
+        <!-- Contenido principal de la pagina -->
+        <section class="content">
+
+          @RenderBody()
+
+        </section><!-- /.content -->
+      </div><!-- /.content-wrapper -->
+
+      <!-- Main Footer -->
+      <footer class="main-footer">
+        <!-- To the right -->
+        <div id="reloj" class="pull-right hidden-xs">
+          
+        </div>
+        <!-- Default to the left -->
+        <strong>2015 <a href="#">Inventarios Gamma</a>.</strong>
+      </footer>
+      <div class="control-sidebar-bg"></div>
+    </div>
+    </body>
+</html>

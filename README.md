@@ -1,2 +1,2 @@
 # Inventario-Gamma
-Simple inventory system for a small business
+Simple inventory system built with ASP .net for a small business

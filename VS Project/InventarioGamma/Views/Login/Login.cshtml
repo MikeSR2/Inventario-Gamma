@@ -1,0 +1,84 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel='shortcut icon' type='image/x-icon' href='/Content/img/key.png' />
+    <title>Login</title>
+    <!-- jQuery -->
+    <script   src="https://code.jquery.com/jquery-2.2.1.min.js"   integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="   crossorigin="anonymous"></script>
+    <!-- tema cosmos -->
+    @Styles.Render("~/Content/bscosmos")
+    @Styles.Render("~/Content/waitMe")
+    <!-- BootStrap JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <!-- css de la pagina -->
+    @Styles.Render("~/Content/login-css")
+    @Scripts.Render("~/Scripts/sweetalert")
+    @Scripts.Render("~/Scripts/waitMe")
+    @Scripts.Render("~/Scripts/login-js")
+</head>
+
+<body>
+	<section id="login">
+        <div class="container">
+    	    <div class="row">
+    	        <div class="col-xs-12">
+        	        <div class="form-wrap">
+                    <div id="msg" style="display:none"></div>
+                    <h1>Inicio de sesión a inventario</h1>
+                        <form role="form" action="inicio-sesion" method="post" id="LoginForm" autocomplete="off">
+                            <div class="form-group">
+                                <label for="inputUser" class="sr-only">Usuario</label>
+                                <input type="text" name="Usuario" id="inputUser" class="form-control" placeholder="Nombre de usuario" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputKey" class="sr-only">Contraseña</label>
+                                <input type="password" name="Llave" id="inputKey" class="form-control" placeholder="Contraseña" required>
+                            </div>
+                            <input type="submit" id="btn-login" class="btn btn-default btn-lg btn-block" value="Iniciar">
+                        </form>
+                        <a href="" class="forget" data-toggle="modal" data-target=".forget-modal">Recuperar contraseña</a>
+                        <hr>
+        	        </div>
+    		    </div> <!-- /.col-xs-12 -->
+    	    </div> <!-- /.row -->
+        </div> <!-- /.container --> 
+    </section>
+
+    <div class="modal fade forget-modal" tabindex="-1" role="dialog" aria-labelledby="myForgetModalLabel" aria-hidden="true">
+	    <div class="modal-dialog modal-sm">
+		    <div class="modal-content">
+			    <div class="modal-header">
+				    <button type="button" class="close" data-dismiss="modal">
+					    <span aria-hidden="true">×</span>
+					    <span class="sr-only">Close</span>
+				    </button>
+				    <h4 class="modal-title">Recuperar contraseña</h4>
+			    </div>
+			    <div class="modal-body">
+				    <p>Debe contactarse con el administrador de su sietema para recuperar su contraseña</p>
+			    </div>
+			    <div class="modal-footer">
+				    <button type="button" class="btn btn-custom" data-dismiss="modal">Ok</button>
+			    </div>
+		    </div> <!-- /.modal-content -->
+	    </div> <!-- /.modal-dialog -->
+    </div> <!-- /.modal -->
+
+    <footer id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <p>Inventario Gamma</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
