@@ -1075,7 +1075,7 @@ a:focus {
   border-bottom-left-radius: 4px;
 }
 .navbar-nav > .user-menu > .dropdown-menu > li.user-header {
-  height: 175px;
+  height: 110px;
   padding: 10px;
   text-align: center;
 }
@@ -1150,7 +1150,7 @@ a:focus {
 }
 @media (max-width: 767px) {
   .navbar-nav > .user-menu .user-image {
-    float: none;
+    
     margin-right: 0;
     margin-top: -8px;
     line-height: 10px;

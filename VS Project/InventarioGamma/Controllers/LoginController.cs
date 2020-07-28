@@ -50,6 +50,7 @@ namespace InventarioGamma.Controllers
                 {
                     Session["usuario"] = usuario.NombreUsuario;
                     Session["almacen"] = usuario.Almacen;
+
                    
                     return Redirect("consultas");
                     

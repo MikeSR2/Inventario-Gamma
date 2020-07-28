@@ -586,6 +586,42 @@ function _init() {
       box.slideUp(this.animationSpeed);
     }
   };
+
+  // Interceptamos el evento submit para actualizr la contrasña
+  $('#formPerfil').submit(function () {
+      // Enviamos el formulario usando AJAX
+      var p1 = $("#newPassword").val();
+      var p2 = $("#newPasswordV").val();
+
+      if (p1 != p2) {
+          $('#mensaje').html("<button type='button' class='close' data-dismiss='alert'>&times;</button>" +
+              "Las Contrase\u00f1as deben de coincidir verifique que sean iguales");
+          $('#mensaje').addClass("alert alert-dismissible alert-danger");
+          $('#mensaje').css("display", "block");
+          return false;
+      }
+
+
+      runWaitMe('#formPerfil');
+      $.ajax({
+          type: 'POST',
+          url: $(this).attr('action'),
+          data: $(this).serialize(),
+          // Mostramos un mensaje con la respuesta 
+          success: function (data) {
+              $('#formPerfil').waitMe('hide');
+              swal("Contrase\u00f1a Actualizada!", data.responseText, "success");
+              ocultarModal("#modalPerfil");
+              document.getElementById("formPerfil").reset();
+          },
+          error: function (data) {
+              $('#formPerfil').waitMe('hide');
+              swal("Error!", data.responseText, "error");
+          }
+      })
+
+      return false;
+  });
 }
 
 /* ------------------
@@ -744,3 +780,26 @@ function _init() {
     });
   };
 }(jQuery));
+
+
+function mostrarModificarPass() {
+    $("#modalPerfil").modal();
+}
+
+//ocultar modal
+function ocultarModal(modal) {
+    $(modal).modal('toggle');
+}
+
+//Función para mostrar div de carga al dar de alta
+function runWaitMe(contenedor) {
+    $(contenedor).waitMe({
+        effect: 'roundBounce',
+        text: 'Procesando registro, por favor espere...',
+        bg: 'rgba(255,255,255,0.7)',
+        color: '#000',
+        sizeW: '',
+        sizeH: '',
+        source: '/Content/img/img.svg'
+    });
+}

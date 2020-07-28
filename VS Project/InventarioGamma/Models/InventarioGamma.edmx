@@ -1,23 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
   <!-- EF Runtime content -->
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="InventarioGammaModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
-        <EntityContainer Name="InventarioGammaModelStoreContainer">
-          <EntitySet Name="Historial" EntityType="InventarioGammaModel.Store.Historial" store:Type="Tables" Schema="gamma" />
-          <EntitySet Name="Productos" EntityType="InventarioGammaModel.Store.Productos" store:Type="Tables" Schema="gamma" />
-          <EntitySet Name="Usuarios" EntityType="InventarioGammaModel.Store.Usuarios" store:Type="Tables" Schema="gamma" />
-        </EntityContainer>
+      <Schema Namespace="InventarioGammaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="NombreUsuario" />
+          </Key>
+          <Property Name="NombreUsuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Llave" Type="varchar" MaxLength="512" Nullable="false" />
+          <Property Name="Almacen" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
         <EntityType Name="Historial">
           <Key>
             <PropertyRef Name="IdHistorial" />
           </Key>
-          <Property Name="IdHistorial" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="IdHistorial" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Producto" Type="int" Nullable="false" />
           <Property Name="Fecha_Movimiento" Type="date" Nullable="false" />
-          <Property Name="Tipo_Movimiento" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="Tipo_Movimiento" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Origen" Type="varchar" MaxLength="50" />
           <Property Name="Destino" Type="varchar" MaxLength="50" />
           <Property Name="Cantidad" Type="float" Nullable="false" />
@@ -28,37 +31,53 @@
           <Key>
             <PropertyRef Name="IdProducto" />
           </Key>
-          <Property Name="IdProducto" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Clave" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="Nombre" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="IdProducto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Clave" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Marca" Type="varchar" MaxLength="50" />
           <Property Name="Descripcion" Type="varchar" MaxLength="100" />
           <Property Name="Presentacion" Type="varchar" MaxLength="100" />
           <Property Name="Precio_Costo" Type="float" Nullable="false" />
           <Property Name="Importe_Inventario" Type="float" Nullable="false" />
-          <Property Name="Almacen" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="Almacen" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Ubicacion" Type="varchar" MaxLength="50" />
           <Property Name="Existencia" Type="float" Nullable="false" />
           <Property Name="Estatus" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Usuarios">
-          <Key>
-            <PropertyRef Name="NombreUsuario" />
-          </Key>
-          <Property Name="NombreUsuario" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="Llave" Type="varchar" Nullable="false" MaxLength="512" />
-          <Property Name="Almacen" Type="varchar" Nullable="false" MaxLength="20" />
-        </EntityType>
+        <Association Name="FK_Historial_Productos">
+          <End Role="Productos" Type="Self.Productos" Multiplicity="1" />
+          <End Role="Historial" Type="Self.Historial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="Historial">
+              <PropertyRef Name="Producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="InventarioGammaModelStoreContainer">
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="db_accessadmin" store:Type="Tables" />
+          <EntitySet Name="Historial" EntityType="Self.Historial" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Productos" EntityType="Self.Productos" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Historial_Productos" Association="Self.FK_Historial_Productos">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="Historial" EntitySet="Historial" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="InventarioGammaModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
-        <EntityContainer Name="InventarioGammaEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Historials" EntityType="InventarioGammaModel.Historial" />
-          <EntitySet Name="Productos" EntityType="InventarioGammaModel.Producto" />
-          <EntitySet Name="Usuarios" EntityType="InventarioGammaModel.Usuario" />
-        </EntityContainer>
+      <Schema Namespace="InventarioGammaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="NombreUsuario" />
+          </Key>
+          <Property Name="NombreUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Llave" Type="String" MaxLength="512" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Almacen" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
         <EntityType Name="Historial">
           <Key>
             <PropertyRef Name="IdHistorial" />
@@ -66,44 +85,68 @@
           <Property Name="IdHistorial" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Producto" Type="Int32" Nullable="false" />
           <Property Name="Fecha_Movimiento" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Tipo_Movimiento" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="Origen" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="Destino" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Tipo_Movimiento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Origen" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Destino" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Cantidad" Type="Double" Nullable="false" />
           <Property Name="Cantidad_Anterior" Type="Double" Nullable="false" />
           <Property Name="Cantidad_Actual" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Producto1" Relationship="Self.FK_Historial_Productos" FromRole="Historial" ToRole="Productos" />
         </EntityType>
         <EntityType Name="Producto">
           <Key>
             <PropertyRef Name="IdProducto" />
           </Key>
           <Property Name="IdProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Clave" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-          <Property Name="Marca" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="Descripcion" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
-          <Property Name="Presentacion" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="Clave" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Marca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Presentacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Precio_Costo" Type="Double" Nullable="false" />
           <Property Name="Importe_Inventario" Type="Double" Nullable="false" />
-          <Property Name="Almacen" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="Ubicacion" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Almacen" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ubicacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Existencia" Type="Double" Nullable="false" />
           <Property Name="Estatus" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Historials" Relationship="Self.FK_Historial_Productos" FromRole="Productos" ToRole="Historial" />
         </EntityType>
-        <EntityType Name="Usuario">
-          <Key>
-            <PropertyRef Name="NombreUsuario" />
-          </Key>
-          <Property Name="NombreUsuario" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="Llave" Type="String" Nullable="false" MaxLength="512" Unicode="false" FixedLength="false" />
-          <Property Name="Almacen" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-        </EntityType>
+        <Association Name="FK_Historial_Productos">
+          <End Role="Productos" Type="Self.Producto" Multiplicity="1" />
+          <End Role="Historial" Type="Self.Historial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="Historial">
+              <PropertyRef Name="Producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="InventarioGammaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Usuarios" EntityType="Self.Usuario" />
+          <EntitySet Name="Historials" EntityType="Self.Historial" />
+          <EntitySet Name="Productos" EntityType="Self.Producto" />
+          <AssociationSet Name="FK_Historial_Productos" Association="Self.FK_Historial_Productos">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="Historial" EntitySet="Historials" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="InventarioGammaModelStoreContainer" CdmEntityContainer="InventarioGammaEntities">
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="InventarioGammaModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="NombreUsuario" ColumnName="NombreUsuario" />
+                <ScalarProperty Name="Llave" ColumnName="Llave" />
+                <ScalarProperty Name="Almacen" ColumnName="Almacen" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Historials">
             <EntityTypeMapping TypeName="InventarioGammaModel.Historial">
               <MappingFragment StoreEntitySet="Historial">
@@ -137,21 +180,12 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Usuarios">
-            <EntityTypeMapping TypeName="InventarioGammaModel.Usuario">
-              <MappingFragment StoreEntitySet="Usuarios">
-                <ScalarProperty Name="NombreUsuario" ColumnName="NombreUsuario" />
-                <ScalarProperty Name="Llave" ColumnName="Llave" />
-                <ScalarProperty Name="Almacen" ColumnName="Almacen" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
-  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <Connection>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
@@ -160,9 +194,10 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="True" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

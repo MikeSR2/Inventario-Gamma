@@ -62,22 +62,28 @@
                   <span class="hidden-xs">@ViewBag.Usuario</span>
                 </a>
                 <ul class="dropdown-menu">
-                  <!-- The user image in the menu -->
-                  <li class="user-header">
-                    <p>
-                      @ViewBag.Usuario
-                      <small>@ViewBag.Sucursal</small>
-                    </p>
-                  </li>
-                  <!-- Menu Footer-->
-                  <li class="user-footer">
-                    <div class="pull-left">
-                      <a href="#" class="btn btn-default btn-flat">Perfil</a>
-                    </div>
-                    <div class="pull-right">
-                      <a href="cerrar-sesion" class="btn btn-default btn-flat">Cerrar sesión</a>
-                    </div>
-                  </li>
+                    <!-- The user image in the menu -->
+                    
+                    <li class="user-header">
+                        <img src="/Content/img/avatar5.png" class="user-image" alt="User Image">
+                        <p>
+                            @ViewBag.Usuario
+                            <small>@ViewBag.Sucursal</small>
+                        </p>
+                    </li>
+
+
+
+
+                    <!-- Menu Footer-->
+                    <li class="user-footer">
+                        <div class="pull-left">
+                            <a onclick="mostrarModificarPass()" class="btn btn-default btn-flat">Perfil</a>
+                        </div>
+                        <div class="pull-right">
+                            <a href="cerrar-sesion" class="btn btn-default btn-flat">Cerrar sesión</a>
+                        </div>
+                    </li>
                 </ul>
               </li>
               
@@ -122,7 +128,64 @@
         <!-- Contenido principal de la pagina -->
         <section class="content">
 
-          @RenderBody()
+            @RenderBody()
+
+            <!-- Modal para cambiar congtrasenna -->
+            <div id="modalPerfil" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Cambiar contraseña</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div id="mensaje" style="display:none"> </div>
+                            <form role="form" method="post" id="formPerfil" class="form-horizontal" action="perfil/actualizar">
+                                <div class="form-group">
+                                    <label for="usuario" class="control-label col-sm-2">Usuario</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" readonly="" class="form-control" name="usuario" id="inUsuario" value=@ViewBag.Usuario>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="sucursal" class="control-label col-sm-2">
+                                        almacen
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <input type="text" readonly="" class="form-control" name="sucursal" id="inSucursal" value=@ViewBag.Sucursal>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="oldPassword" class="control-label col-sm-2">Contraseña</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" required class="form-control" name="Password" id="oldPassword">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newPassword" class="control-label col-sm-2">Nueva Contraseña</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" required class="form-control" name="newPassword" id="newPassword" pattern="[A-Za-z0-9]{6,10}" title="Ingresa valores de la a-z y numeros">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newPasswordV" class="control-label col-sm-2">Confirme Contraseña</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" required class="form-control" name="newPasswordV" id="newPasswordV" pattern="[A-Za-z0-9]{6,10}" title="Ingresa valores de la a-z y numeros">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" id="btnActualizarPass" class="btn btn-primary glyphicon glyphicon-floppy-disk"> Actualizar</button>
+                                        <button type="button" id="btnCancelarCP" onclick="ocultarModal('#modalPerfil');" class="btn btn-info glyphicon glyphicon glyphicon-ban-circle"> Cancelar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
@@ -134,7 +197,7 @@
           
         </div>
         <!-- Default to the left -->
-        <strong>2015 <a href="#">Inventarios Gamma</a>.</strong>
+        <strong>2020 <a href="#">Inventarios Gamma</a>.</strong>
       </footer>
       <div class="control-sidebar-bg"></div>
     </div>

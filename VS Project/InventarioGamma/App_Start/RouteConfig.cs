@@ -85,6 +85,13 @@ namespace InventarioGamma
             );
 
             routes.MapRoute(
+              name: "ChangePass",
+              url: "perfil/actualizar",
+              defaults: new { controller = "Perfil", action = "Actualizar", id = UrlParameter.Optional }
+            );
+
+           
+            routes.MapRoute(
               name: "Eliminar",
               url: "Actualizaciones/Eliminar",
               defaults: new { controller = "Actualizaciones", action = "Eliminar", id = UrlParameter.Optional }
