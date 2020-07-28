@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Mime;
 using System.Web;
 using System.Web.Mvc;
+using NLog;
 
 namespace InventarioGamma.Controllers
 {
@@ -14,6 +15,8 @@ namespace InventarioGamma.Controllers
     /// </summary>
     public class AltasController : Controller
     {
+
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         /// <summary>
         /// Método que regresa la vista principal de altas
         /// </summary>
@@ -69,7 +72,7 @@ namespace InventarioGamma.Controllers
             }
             catch(System.Data.EntityException ex)
             {
-                Console.Write(ex.InnerException);
+                logger.Error("Error:" + ex.InnerException);
                 Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
                 valueBack = "Ocurrió un error durante registro, verifique los datos y vuelva a intentarlo";
                 return Content(valueBack, MediaTypeNames.Text.Plain);

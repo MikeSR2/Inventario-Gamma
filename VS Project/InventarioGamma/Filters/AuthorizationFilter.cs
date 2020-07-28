@@ -4,11 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using NLog;
 
 namespace InventarioGamma.Filters
 {
     public class AuthorizationFilter : ActionFilterAttribute
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             base.OnActionExecuting(filterContext);
@@ -39,6 +41,7 @@ namespace InventarioGamma.Filters
 
             if (!HttpContext.Current.Session["usuario"].Equals("admin") && filterContext.RouteData.GetRequiredString("controller").Equals("Admin", StringComparison.CurrentCultureIgnoreCase))
             {
+                logger.Info("Blocked access to "+ HttpContext.Current.Session["usuario"]);
                 filterContext.Result = new RedirectToRouteResult(
                new RouteValueDictionary
                {

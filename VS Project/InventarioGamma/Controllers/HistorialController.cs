@@ -5,6 +5,7 @@ using System.Data.Objects.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using NLog;
 
 namespace InventarioGamma.Controllers
 {
@@ -13,10 +14,12 @@ namespace InventarioGamma.Controllers
     /// </summary>
     public class HistorialController : Controller
     {
-       /// <summary>
-       /// Método que regresa vista principal de Historial
-       /// </summary>
-       /// <returns>Vista Historial</returns>
+
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+        /// <summary>
+        /// Método que regresa vista principal de Historial
+        /// </summary>
+        /// <returns>Vista Historial</returns>
         public ActionResult Historial()
         {
             ViewBag.titSeccion = ConstantesTitulos.TituloHistorial;
@@ -159,7 +162,7 @@ namespace InventarioGamma.Controllers
             }
             catch (System.Data.EntityException ex)
             {
-                Console.Write(ex.InnerException);
+                logger.Error("Error:" + ex.InnerException);
                 return Json("");
             }
         }

@@ -5,11 +5,14 @@ using System.Web;
 using InventarioGamma.Models;
 using System.Web.Mvc;
 using System.Text;
+using NLog;
 
 namespace InventarioGamma.Controllers
 {
     public class PerfilController : Controller
     {
+
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         //
         // GET: /Perfil/
 
@@ -48,7 +51,7 @@ namespace InventarioGamma.Controllers
             }
             catch (System.Data.EntityException ex)
             {
-                Console.Write(ex.InnerException);
+                logger.Error("Error:" + ex.InnerException);
                 Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
                 ValueBack = "Ocurrió un error durante la operación, verifique los datos y vuelva a intentarlo";
                 return Json(new { mensaje = ValueBack }, JsonRequestBehavior.AllowGet);

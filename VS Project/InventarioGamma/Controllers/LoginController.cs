@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using NLog; 
 
 namespace InventarioGamma.Controllers
 {
@@ -13,6 +14,8 @@ namespace InventarioGamma.Controllers
     /// </summary>
     public class LoginController : Controller
     {
+
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         /// <summary>
         /// Método que regresa vista de Login
         /// </summary>
@@ -65,6 +68,7 @@ namespace InventarioGamma.Controllers
             }
             catch (System.Data.EntityException ex)
             {
+                logger.Error("Error:" + ex.InnerException);
                 Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
                 ValueBack = "Error interno, espere un momento y vuelva a intentar o contacte a su administrador del sistema";
                 return Content(ValueBack, System.Net.Mime.MediaTypeNames.Text.Plain);

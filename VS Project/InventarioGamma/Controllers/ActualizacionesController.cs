@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Mime;
 using System.Web;
 using System.Web.Mvc;
+using NLog;
 
 namespace InventarioGamma.Controllers
 {
@@ -14,7 +15,9 @@ namespace InventarioGamma.Controllers
     /// </summary>
     public class ActualizacionesController : Controller
     {
-       
+
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Metodo para actualizar datos de un producto
         /// </summary>
@@ -49,6 +52,7 @@ namespace InventarioGamma.Controllers
                 producto.Presentacion = Product.Presentacion;
                 producto.Ubicacion = Product.Ubicacion;
                 resultado = contextoDB.SaveChanges();
+                logger.Info("Producto actualizado");
                 ///Crea registro de historial
                 Historial hist = new Historial();
                 hist.Producto = producto.IdProducto;
@@ -61,11 +65,12 @@ namespace InventarioGamma.Controllers
                 hist.Cantidad_Actual = producto.Existencia;
                 contextoDB.Historials.Add(hist);
                 contextoDB.SaveChanges();
+                logger.Info("Historial creado");
                 ValueBack = "Registro actualizado correctamente";
             }
             catch (System.Data.EntityException ex)
             {
-                Console.Write(ex.InnerException);
+                logger.Error("Error:" +ex.InnerException);
                 Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
                 ValueBack = "Ocurrió un error durante actualización, verifique los datos y vuelva a intentarlo";
                 return Content(ValueBack, MediaTypeNames.Text.Plain);
@@ -139,6 +144,7 @@ namespace InventarioGamma.Controllers
                     PodTrans.Presentacion = producto.Presentacion;
                     PodTrans.Ubicacion = "NA";
                     contextoDB.Productos.Add(PodTrans);
+                    logger.Info("Transferencia realizada");
                     ValueBack = "Transferencia realizada!";
                 }
 
@@ -163,11 +169,12 @@ namespace InventarioGamma.Controllers
                 hist.Cantidad_Actual = producto.Existencia;
                 contextoDB.Historials.Add(hist);
                 contextoDB.SaveChanges();
+
                
             }
             catch (System.Data.EntityException ex)
             {
-                Console.Write(ex.InnerException);
+                logger.Error("Error:" + ex.InnerException);
                 Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
                 ValueBack = "Ocurrió un error durante transferencia, verifique los datos y vuelva a intentarlo";
                 return Content(ValueBack, MediaTypeNames.Text.Plain);
@@ -224,7 +231,7 @@ namespace InventarioGamma.Controllers
             }
             catch (System.Data.EntityException ex)
             {
-                Console.Write(ex.InnerException);
+                logger.Error("Error:" + ex.InnerException);
                 Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
                 ValueBack = "Ocurrió un error durante alta de inventario, verifique los datos y vuelva a intentarlo";
                 return Content(ValueBack, MediaTypeNames.Text.Plain);
@@ -278,7 +285,7 @@ namespace InventarioGamma.Controllers
             }
             catch (System.Data.EntityException ex)
             {
-                Console.Write(ex.InnerException);
+                logger.Error("Error:" + ex.InnerException);
                 Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
                 ValueBack = "Ocurrió un error durante eliminación, verifique los datos y vuelva a intentarlo";
                 return Json(new { mensaje = ValueBack }, JsonRequestBehavior.AllowGet);
@@ -349,7 +356,7 @@ namespace InventarioGamma.Controllers
             }
             catch (System.Data.EntityException ex)
             {
-                Console.Write(ex.InnerException);
+                logger.Error("Error:" + ex.InnerException);
                 Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
                 ValueBack = "Ocurrió un error durante la venta, verifique los datos y vuelva a intentarlo";
                 return Content(ValueBack, MediaTypeNames.Text.Plain);

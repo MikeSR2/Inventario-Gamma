@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-
+using NLog;
 namespace InventarioGamma.Controllers
 {
     /// <summary>
@@ -13,7 +13,7 @@ namespace InventarioGamma.Controllers
     /// </summary>
     public class AdminController : Controller
     {
-       
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         /// <summary>
         /// Metodo que regresa la vista principal de adminitracion
         /// </summary>
@@ -49,7 +49,7 @@ namespace InventarioGamma.Controllers
             }
             catch (InvalidOperationException ex)
             {
-                Console.Write(ex.InnerException);
+                logger.Error("Error:" + ex.InnerException);
                 Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
                 valueBack = "Ocurrió un error durante registro, verifique los datos";
             }
@@ -78,7 +78,7 @@ namespace InventarioGamma.Controllers
             }
             catch (InvalidOperationException ex)
             {
-                Console.Write(ex.InnerException);
+                logger.Error("Error:" + ex.InnerException);
                 Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
                 valueBack = "Ocurrió un error durante registro, verifique los datos";
             }
@@ -109,12 +109,13 @@ namespace InventarioGamma.Controllers
                 thisUser.Llave = newPass;
                 contexDBUser.SaveChanges();
                 valueBack = "200";
+                logger.Info("Done");
                 Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
 
             }
             catch (InvalidOperationException ex)
             {
-                Console.Write(ex.InnerException);
+                logger.Error("Error:" + ex.InnerException);
                 Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
                 valueBack = "Ocurrió un error durante registro, verifique los datos";
             }
@@ -144,7 +145,7 @@ namespace InventarioGamma.Controllers
             }
             catch (System.Data.EntityException ex)
             {
-                Console.Write(ex.InnerException);
+                logger.Error("Error:" + ex.InnerException);
                 return Json("");
             }
         }
