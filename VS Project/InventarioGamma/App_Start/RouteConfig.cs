@@ -85,6 +85,24 @@ namespace InventarioGamma
             );
 
             routes.MapRoute(
+              name: "ListaUsuarios",
+              url: "Admin/ListaUsuarios",
+              defaults: new { controller = "Admin", action = "ListaUsuarios", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+              name: "DelUser",
+              url: "Admin/Eliminar",
+              defaults: new { controller = "Admin", action = "DelUser", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+              name: "ResetUser",
+              url: "Admin/Reset",
+              defaults: new { controller = "Admin", action = "ResetUser", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
               name: "ChangePass",
               url: "perfil/actualizar",
               defaults: new { controller = "Perfil", action = "Actualizar", id = UrlParameter.Optional }

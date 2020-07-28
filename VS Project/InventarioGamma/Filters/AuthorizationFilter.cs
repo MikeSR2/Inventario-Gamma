@@ -23,24 +23,28 @@ namespace InventarioGamma.Filters
             {
                 return;
             }
-            //if (HttpContext.Current.Session["usuario"] != "Admin" && filterContext.RouteData.GetRequiredString("controller").Equals("Admin", StringComparison.CurrentCultureIgnoreCase)
-            //    && filterContext.RouteData.GetRequiredString("action").Equals("Admin", StringComparison.CurrentCultureIgnoreCase))
-            //{
-            //    filterContext.Result = new RedirectToRouteResult(
-            //    new RouteValueDictionary 
-            //    { 
-            //        { "controller", "Consultas" }, 
-            //        { "action", "Consultas" } 
-            //    });
-            //}
+
+
             if (HttpContext.Current.Session["usuario"] == null)
             {
                 filterContext.Result = new RedirectToRouteResult(
-                new RouteValueDictionary 
-                { 
-                    { "controller", "Login" }, 
-                    { "action", "Login" } 
+                new RouteValueDictionary
+                {
+                    { "controller", "Login" },
+                    { "action", "Login" }
                 });
+
+                return;
+            }
+
+            if (!HttpContext.Current.Session["usuario"].Equals("admin") && filterContext.RouteData.GetRequiredString("controller").Equals("Admin", StringComparison.CurrentCultureIgnoreCase))
+            {
+                filterContext.Result = new RedirectToRouteResult(
+               new RouteValueDictionary
+               {
+                   { "controller", "Consultas" },
+                   { "action", "Consultas" }
+               });
             }
         }
     }

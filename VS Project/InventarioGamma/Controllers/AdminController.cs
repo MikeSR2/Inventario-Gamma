@@ -29,6 +29,11 @@ namespace InventarioGamma.Controllers
             return View();
         }
 
+        /// <summary>
+        /// da de alta un usuario
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult AltUser(Usuario user)
         {
@@ -50,6 +55,98 @@ namespace InventarioGamma.Controllers
             }
 
             return Content(valueBack);
+        }
+
+        /// <summary>
+        /// da de baja un usuario
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult DelUser(String usuario)
+        {
+            var contexDBUser = new InventarioGammaEntities();
+            String valueBack = "";
+            
+            try
+            {
+                var user = new Usuario { NombreUsuario = usuario };
+                contexDBUser.Entry(user).State = System.Data.Entity.EntityState.Deleted;
+                contexDBUser.SaveChanges();
+                valueBack = "200";
+                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+            }
+            catch (InvalidOperationException ex)
+            {
+                Console.Write(ex.InnerException);
+                Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+                valueBack = "Ocurrió un error durante registro, verifique los datos";
+            }
+
+            return Content(valueBack);
+        }
+
+        /// <summary>
+        /// reset de la password de un usuario
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult ResetUser(String usuario)
+        {
+            var contexDBUser = new InventarioGammaEntities();
+            var newPass = Convert.ToBase64String(Encoding.UTF8.GetBytes(usuario));
+            String valueBack = "";
+
+            try
+            {
+                var thisUser = (from user in contexDBUser.Usuarios
+                                where
+                                    user.NombreUsuario==usuario
+                                select user).FirstOrDefault();
+
+                
+                thisUser.Llave = newPass;
+                contexDBUser.SaveChanges();
+                valueBack = "200";
+                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+
+            }
+            catch (InvalidOperationException ex)
+            {
+                Console.Write(ex.InnerException);
+                Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+                valueBack = "Ocurrió un error durante registro, verifique los datos";
+            }
+
+            return Content(valueBack);
+        }
+
+        /// <summary>
+        /// Método que carga los usuarios 
+        /// </summary>
+        /// <returns>Objeto JSON con lista de productos</returns>
+        [HttpPost]
+        public ActionResult ListaUsuarios()
+        {
+            try
+            {
+                var contextoDB = new InventarioGammaEntities();
+                var myList = (from usuarios in contextoDB.Usuarios
+                              select new
+                              {
+                                  Usuario = usuarios.NombreUsuario,
+                                  Almacen = usuarios.Almacen,
+                              }).ToList();
+                return Json(myList, JsonRequestBehavior.AllowGet);
+
+
+            }
+            catch (System.Data.EntityException ex)
+            {
+                Console.Write(ex.InnerException);
+                return Json("");
+            }
         }
 
 
